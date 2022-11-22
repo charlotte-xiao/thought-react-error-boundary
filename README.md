@@ -14,3 +14,8 @@ Tips - do not catch errors for:
 - 异步代码（例如 setTimeout 回调函数）
 - 服务端渲染
 - 自身抛出来的错误（并非它的子组件）
+
+## E-2_add_fallback_props
+
+- 自定义fallback属性
+- 自定义显示报错内容

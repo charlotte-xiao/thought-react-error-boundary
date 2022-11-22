@@ -1,29 +1,41 @@
 import React from "react";
 
-type ErrorState = {
-  hasError: boolean;
-  message: string;
+type FallbackElement = React.ReactElement<unknown, string | React.FC | typeof React.Component> | null;
+
+type ErrorBoundaryState = {
+  error: Error | null;
 }
-type ErrorProps = {}
+type ErrorBoundaryProps = {
+  fallback?: FallbackElement;
+  onError?: (error: Error, info: string) => void;
+}
 
-class ErrorBoundary extends React.Component<React.PropsWithChildren<ErrorProps>, ErrorState> {
+const initialState: ErrorBoundaryState = {
+  error: null,
+}
 
-  constructor(props: React.PropsWithChildren<ErrorProps>) {
-    super(props);
-    this.state = {hasError: false, message: ''};
-  }
+class ErrorBoundary extends React.Component<React.PropsWithChildren<ErrorBoundaryProps>, ErrorBoundaryState> {
+  state = initialState;
 
-  static getDerivedStateFromError(error: Error): ErrorState {
-    return {hasError: true, message: error.message};
+  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+    return {error};
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.log(error, errorInfo);
+    if (this.props.onError) {
+      this.props.onError(error, errorInfo.componentStack);
+    }
   }
 
   render() {
-    if (this.state.hasError) {
-      return <h1>Something went wrong.Error message:{this.state.message}</h1>;
+    const {fallback} = this.props;
+    const {error} = this.state;
+
+    if (error !== null) {
+      if (React.isValidElement(fallback)) {
+        return fallback;
+      }
+      throw new Error('ErrorBoundary 组件需要传入 fallback');
     }
     return this.props.children;
   }

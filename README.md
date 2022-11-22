@@ -19,3 +19,9 @@ Tips - do not catch errors for:
 
 - 自定义fallback属性
 - 自定义显示报错内容
+
+## E-3_multiple_ways_fallback
+
+- fallback 固定的错误展示组件
+- FallbackComponent 传入错误展示组件
+- fallbackRender 传入渲染错误展示组件函数

@@ -23,6 +23,17 @@ type ErrorBoundaryProps = {
   onError?: (error: Error, info: string) => void;
   // 自定义重置逻辑
   onReset?: () => void;
+  // 重置数组
+  resetKeys?: Array<unknown>;
+  // 根据重置数组变化进行的处理
+  onResetKeysChange?: (
+    prevResetKey: Array<unknown> | undefined,
+    resetKeys: Array<unknown> | undefined,
+  ) => void;
+}
+
+const changedArray = (a: Array<unknown> = [], b: Array<unknown> = []) => {
+  return a.length !== b.length || a.some((item, index) => !Object.is(item, b[index]));
 }
 
 const initialState: ErrorBoundaryState = {
@@ -39,6 +50,16 @@ class ErrorBoundary extends React.Component<React.PropsWithChildren<ErrorBoundar
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     if (this.props.onError) {
       this.props.onError(error, errorInfo.componentStack);
+    }
+  }
+
+  componentDidUpdate(prevProps: Readonly<React.PropsWithChildren<ErrorBoundaryProps>>) {
+    const {resetKeys, onResetKeysChange} = this.props;
+    if (changedArray(prevProps.resetKeys, resetKeys)) {
+      if (onResetKeysChange) {
+        onResetKeysChange(prevProps.resetKeys, resetKeys);
+      }
+      this.reset();
     }
   }
 

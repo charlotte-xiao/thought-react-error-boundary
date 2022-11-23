@@ -25,3 +25,9 @@ Tips - do not catch errors for:
 - fallback 固定的错误展示组件
 - FallbackComponent 传入错误展示组件
 - fallbackRender 传入渲染错误展示组件函数
+
+# E-4_add_reset_function
+
+- 可以自定义增加Reset按钮
+- 重置状态功能
+- 执行自定义操作功能

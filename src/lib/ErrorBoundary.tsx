@@ -2,6 +2,7 @@ import React from "react";
 
 export interface FallbackProps {
   error: Error;
+  resetErrorBoundary: () => void;
 }
 
 export declare function FallbackRender(props: FallbackProps): FallbackElement;
@@ -18,7 +19,10 @@ type ErrorBoundaryProps = {
   FallbackComponent?: React.ComponentType<FallbackProps>;
   // Render组件函数
   fallbackRender?: typeof FallbackRender;
+  // 错误上报处理(日志，监控埋点)
   onError?: (error: Error, info: string) => void;
+  // 自定义重置逻辑
+  onReset?: () => void;
 }
 
 const initialState: ErrorBoundaryState = {
@@ -38,12 +42,23 @@ class ErrorBoundary extends React.Component<React.PropsWithChildren<ErrorBoundar
     }
   }
 
+  reset = () => {
+    this.setState(initialState);
+  }
+
+  resetErrorBoundary = () => {
+    if (this.props.onReset) {
+      this.props.onReset();
+    }
+    this.reset();
+  }
+
   render() {
     const {fallback, FallbackComponent, fallbackRender} = this.props;
     const {error} = this.state;
 
     if (error !== null) {
-      const fallbackProps: FallbackProps = {error,}
+      const fallbackProps: FallbackProps = {error, resetErrorBoundary: this.resetErrorBoundary}
 
       if (React.isValidElement(fallback)) {
         return fallback;

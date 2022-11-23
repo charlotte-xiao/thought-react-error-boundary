@@ -11,10 +11,15 @@ function App() {
         <SimpleExample></SimpleExample>
       </ErrorBoundary>
       <ErrorBoundary onError={() => console.error('出错啦')}
-                     fallbackRender={({error}) => <ErrorFallback error={error}/>}>
+                     onReset={() => console.log('已经重置')}
+                     fallbackRender={({error, resetErrorBoundary}) =>
+                       <ErrorFallback error={error}
+                                      resetErrorBoundary={resetErrorBoundary}
+                       />}>
         <SimpleExample></SimpleExample>
       </ErrorBoundary>
       <ErrorBoundary onError={() => console.error('出错啦')}
+                     onReset={() => console.log('已经重置')}
                      FallbackComponent={ErrorFallback}>
         <SimpleExample></SimpleExample>
       </ErrorBoundary>

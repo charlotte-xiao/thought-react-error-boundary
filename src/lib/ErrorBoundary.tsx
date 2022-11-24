@@ -54,8 +54,10 @@ class ErrorBoundary extends React.Component<React.PropsWithChildren<ErrorBoundar
   }
 
   componentDidUpdate(prevProps: Readonly<React.PropsWithChildren<ErrorBoundaryProps>>) {
+    const {error} = this.state;
     const {resetKeys, onResetKeysChange} = this.props;
-    if (changedArray(prevProps.resetKeys, resetKeys)) {
+
+    if (error !== null && changedArray(prevProps.resetKeys, resetKeys)) {
       if (onResetKeysChange) {
         onResetKeysChange(prevProps.resetKeys, resetKeys);
       }

@@ -40,3 +40,8 @@ Tips - do not catch errors for:
 # E-6_wrap_component
 
 - withErrorBoundary：装饰器包裹组件
+
+```javascript
+export default withXXX(xxx, xxx);
+export default XXX(xxx,xxx);
+```

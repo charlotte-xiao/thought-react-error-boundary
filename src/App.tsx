@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import ErrorBoundary from "./lib/ErrorBoundary";
 import SimpleExample from "./example/SimpleExample";
 import {ErrorFallback} from "./utils";
+import WithErrorBoundarySimpleExample2 from "./example/SimpleExample2";
 
 function App() {
   const [retry, setRetry] = useState<number>(0);
@@ -40,6 +41,9 @@ function App() {
                      FallbackComponent={ErrorFallback}>
         <SimpleExample></SimpleExample>
       </ErrorBoundary>
+
+      <div>通过封装后的组件：</div>
+      <WithErrorBoundarySimpleExample2/>
 
     </div>
   );

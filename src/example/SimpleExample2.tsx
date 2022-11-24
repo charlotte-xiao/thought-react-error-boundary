@@ -1,4 +1,6 @@
 import React, {useState} from "react";
+import {withErrorBoundary} from "../lib/ErrorBoundary";
+import {ErrorFallback} from "../utils";
 
 function SimpleExample2() {
 
@@ -27,4 +29,10 @@ function SimpleExample2() {
   )
 }
 
-export default SimpleExample2;
+const WithErrorBoundarySimpleExample2 = withErrorBoundary(SimpleExample2, {
+  onError: () => console.error('出错啦'),
+  onReset: () => console.log('已经重置'),
+  FallbackComponent: ErrorFallback,
+});
+
+export default WithErrorBoundarySimpleExample2;

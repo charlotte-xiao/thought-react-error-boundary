@@ -1,4 +1,4 @@
-import React from "react";
+import React, {StaticLifecycle} from "react";
 
 export interface FallbackProps {
   error: Error;
@@ -96,6 +96,23 @@ class ErrorBoundary extends React.Component<React.PropsWithChildren<ErrorBoundar
     }
     return this.props.children;
   }
+}
+
+export function withErrorBoundary<P extends StaticLifecycle<any, any>>(
+  Component: React.ComponentType<P>,
+  errorBoundaryProps: ErrorBoundaryProps,
+): React.ComponentType<P> {
+  const Wrapped: React.ComponentType<P> = props => {
+    return (
+      <ErrorBoundary {...errorBoundaryProps}>
+        <Component {...props} />
+      </ErrorBoundary>
+    )
+  }
+  const name = Component.displayName || Component.name || 'Unknown';
+  Wrapped.displayName = `withErrorBoundary(${name})`;
+
+  return Wrapped;
 }
 
 export default ErrorBoundary;

@@ -31,3 +31,8 @@ Tips - do not catch errors for:
 - 可以自定义增加Reset按钮
 - 重置状态功能
 - 执行自定义操作功能
+
+# E-5_monitor_render
+
+- 外部监听以重置
+- 提供resetKeys 数组：若数组里的东西改变，ErrorBoundary就重置

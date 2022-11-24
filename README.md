@@ -36,3 +36,7 @@ Tips - do not catch errors for:
 
 - 外部监听以重置
 - 提供resetKeys 数组：若数组里的东西改变，ErrorBoundary就重置
+
+# E-6_wrap_component
+
+- withErrorBoundary：装饰器包裹组件

@@ -45,3 +45,8 @@ Tips - do not catch errors for:
 export default withXXX(xxx, xxx);
 export default XXX(xxx,xxx);
 ```
+
+# E-7_add_error_handler
+
+- 通过修改state触发render
+- 抛出异常交给Error Boundary处理

@@ -98,7 +98,7 @@ class ErrorBoundary extends React.Component<React.PropsWithChildren<ErrorBoundar
   }
 }
 
-export function withErrorBoundary<P extends StaticLifecycle<any, any>>(
+function withErrorBoundary<P extends StaticLifecycle<any, any>>(
   Component: React.ComponentType<P>,
   errorBoundaryProps: ErrorBoundaryProps,
 ): React.ComponentType<P> {
@@ -115,4 +115,10 @@ export function withErrorBoundary<P extends StaticLifecycle<any, any>>(
   return Wrapped;
 }
 
-export default ErrorBoundary;
+function useErrorHandler<P = Error>(): React.Dispatch<React.SetStateAction<P | null>> {
+  const [error, setError] = React.useState<P | null>(null)
+  if (error != null) throw error;
+  return setError;
+}
+
+export {ErrorBoundary, withErrorBoundary, useErrorHandler};

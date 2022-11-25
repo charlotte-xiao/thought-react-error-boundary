@@ -1,10 +1,11 @@
 import React, {useState} from "react";
-import {withErrorBoundary} from "../lib/ErrorBoundary";
+import {useErrorHandler, withErrorBoundary} from "../lib/ErrorBoundary";
 import {ErrorFallback} from "../utils";
 
 function SimpleExample2() {
 
   let [number, setNumber] = useState(0);
+  let handleError = useErrorHandler();
 
   const onAddNumber = () => {
     setNumber(number + 1);
@@ -13,7 +14,14 @@ function SimpleExample2() {
   // Warning: Can not catch this error with Error Boundary!!!
   // This is Event handlers, we should use try catch!!!
   const onThrowError = () => {
-    throw new Error(`when number is ${number}, throw an error`);
+    // try {
+    //   throw new Error(`when number is ${number}, throw an error`);
+    // } catch (e: any) {
+    //   handleError(e);
+    // }
+    setTimeout(() => {
+      handleError(new Error('💥 CABOOM 💥'))
+    })
   }
 
   if (number > 5) {

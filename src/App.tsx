@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import ErrorBoundary from "./lib/ErrorBoundary";
+import {ErrorBoundary} from "./lib/ErrorBoundary";
 import SimpleExample from "./example/SimpleExample";
 import {ErrorFallback} from "./utils";
 import WithErrorBoundarySimpleExample2 from "./example/SimpleExample2";
